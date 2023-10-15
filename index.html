@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="example" name="example" action="" method="post">
+        <fieldset>
+            <legend>Example Form</legend>
+                <div>
+                    <label for="email">Email (required):</label>
+                    <input type="email" id="email" name="email" value="" required />
+                </div>
+            <div>
+                <label for="postal">Postal Code:</label>
+                <input type="text" pattern="[0-9]*" id="postal" name="url" value="" />
+            </div>
+            <div id="error"></div>
+            <div>
+                <input type="submit" value="Submit" />
+            </div>
+        </fieldset>
+    </form>
+    
+<script type="text/javascript">
+        function inputValidator(id, value) {
+        // Проверяем корректность адреса электронной почты
+        if (id === 'email') {
+            return validator.isEmail(value);
+        }
+        // Проверяем корректность почтового индекса США
+        if (id === 'postal') {
+            return validator.isPostalCode(value, 'US');
+        }
+            return false;
+        }
+        const inputs = document.querySelectorAll('#example input');
+        inputs.forEach(input => {
+        // Активируем событие при каждом изменении в поле input
+            input.addEventListener('input', () => {
+        // Передаем значение из поля input в функцию валидации
+        const valid = inputValidator(input.id, input.value);
+        // Если результаты ввода некорректны,
+        // присваиваем атрибуту aria-invalid значение true
+        if (!valid && input.value.length > 0) {
+            this.setAttribute('aria-invalid', 'true');
+        }
+    });
+    });
+</script>
+</body>
+</html>
